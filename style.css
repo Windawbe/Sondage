@@ -339,3 +339,7 @@ ul {
     width: 100%;
 }
 }
+
+.brightness:hover{
+	opacity: .5;
+}

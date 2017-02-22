@@ -2,7 +2,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #0e1a35;">
         <div class="container">
             <ul class="nav navbar-nav">
-                <a href="index.php"><span class="fa fa-home fa-2x" style="margin-top:5px;"></span></a>
+                <a href="./index.php"><span class="fa fa-home fa-2x" style="margin-top:5px;"></span></a>
             </ul>
             <div class="navbar-header pull-right">
                 

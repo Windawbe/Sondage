@@ -6,8 +6,8 @@
     <!-- FONT AWESOME -->
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- CSS -->
-    <link href="style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="./style.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -15,7 +15,6 @@
         <meta http-equiv="content-type" 
               content="text/html;charset=utf-8" />
     </head>
-    
 
     <?php
         session_start();

@@ -4,7 +4,9 @@
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384 BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="./JavaScript-Load-Image/js/load-image.all.min.js"></script>
+    
     <!-- CSS -->
     <link rel="stylesheet" href="./style.css">
     
@@ -23,7 +25,6 @@
     
     <body background="Images/background0.jpg" style="background-repeat: no-repeat;
     background-attachment: fixed;">
-    
     </body>
 
 </html>

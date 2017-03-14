@@ -5,8 +5,8 @@ Class Connexion{
 	function __construct() {	
 		try {
 			$host = 'mysql:host=localhost;dbname=sondage';
-			$login = $_SESSION["Util"];
-			$password = $_SESSION["Password"];
+			$login = root;//$_SESSION["Util"];
+			$password = '';//$_SESSION["Password"];
 			$this -> pdo = new PDO( $host, $login, $password );
 			$this -> pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
@@ -15,4 +15,5 @@ Class Connexion{
 		}		
 	}
 }
+
 ?>

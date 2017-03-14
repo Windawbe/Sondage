@@ -6,6 +6,7 @@ if(isset($_SESSION['pseudo'])){ // Si utilisateur déjà connecté, envoie messa
 }
 else{
 
+    // <editor-fold desc="Récupération POST">
     $login=$_POST['username'];
     $name=$_POST['name'];
     $firstname=$_POST['firstname'];
@@ -20,8 +21,9 @@ else{
     $mdp_erreur = NULL;
     $email_erreur1 = NULL;
     $email_erreur2 = NULL;
+    // </editor-fold>
 
-
+    // <editor-fold desc="Connexion BDD">
     try{
         $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
         $db->exec("SET CHARACTER SET utf8"); 
@@ -30,8 +32,9 @@ else{
     catch (Exception $e){
         die('Erreur : ' . $e->getMessage());
     }
+    // </editor-fold>
 
-    //Vérification du pseudo
+    // <editor-fold desc="Vérification du pseudo">
     $query=$db->prepare('SELECT COUNT(*) AS nbr FROM utilisateur WHERE pseudo =:pseudo');
     $query->bindValue(':pseudo',$login, PDO::PARAM_STR);
     $query->execute();
@@ -47,14 +50,16 @@ else{
         $pseudo_erreur2 = "Votre pseudo est trop grand";
         $i++;
     }
+    // </editor-fold>
 
-    //Vérification du mdp
+    // <editor-fold desc="Vérification du mdp">
     if ($pass_hache != $confirm || empty($confirm) || empty($pass_hache)){
         $mdp_erreur = "Votre mot de passe et votre confirmation diffèrent, ou sont vides";
         $i++;
     }
+    // </editor-fold>
 
-    //Vérification de l'adresse email
+    // <editor-fold desc="Vérification de l'adresse email">
     $query=$db->prepare('SELECT COUNT(*) AS nbr FROM utilisateur WHERE email =:mail');
     $query->bindValue(':mail',$email, PDO::PARAM_STR);
     $query->execute();
@@ -72,12 +77,12 @@ else{
         $email_erreur2 = "Votre adresse E-Mail n'a pas un format valide";
         $i++;
     }
+    // </editor-fold>
 
     // Si tout est OK
     if ($i==0){
 
-        //On crée l'utilisateur
-
+        // <editor-fold desc="Création de l'utilisateur">
         $query=$db->prepare('INSERT INTO utilisateur (pseudo, mdp, email, nom, prenom, adresse) VALUES (:pseudo, :pass_hache, :email, :name, :firstname, :address)');
 
         $query->bindValue(':pseudo', $login, PDO::PARAM_STR);
@@ -94,8 +99,10 @@ else{
 
         echo '<br /><br /><br />Inscription réussie !';
         header("Refresh: 2; URL=./index.php");
+        // </editor-fold>
     }
     else{
+        // <editor-fold desc="Message d'erreur">
         echo '<br /><br /><br />';
         echo'<h1>Inscription interrompue</h1>';
         echo'<p>Une ou plusieurs erreurs se sont produites pendant l incription</p>';
@@ -108,7 +115,7 @@ else{
 
         echo'<p>Cliquez <a href="./ConnexionForm.php">ici</a> pour recommencer</p>';
         header("Refresh: 2; URL=./index.php");
-
+        // </editor-fold>
     }
 }
 ?>

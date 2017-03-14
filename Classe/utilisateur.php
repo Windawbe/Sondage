@@ -9,10 +9,9 @@ Class Utilisateur{
 	public $prenom;
 	public $adresse;
 	
-	public function __construct($id_utilisateur, $pseudo, $mdp, $email, $nom, $prenom, $adresse)
+	public function __construct($pseudo, $mdp, $email, $nom, $prenom, $adresse)
     {
 		try{
-			$this->setId_utilisateur($id_utilisateur);
 			$this->setPseudo($pseudo);
 			$this->setMdp($mdp);
 			$this->setEmail($email);
@@ -26,10 +25,6 @@ Class Utilisateur{
     }
 	
 	// setters
-	public function setId_utilisateur($id_utilisateur)
-    {
-        $this->id_utilisateur = $id_utilisateur;
-    }
 	
 	public function setPseudo($pseudo)
     {

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="sondage@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="sondage">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="annuaire"/>
+    <schema id="4" parent="1" name="banque"/>
+    <schema id="5" parent="1" name="cake_blog"/>
+    <schema id="6" parent="1" name="central"/>
+    <schema id="7" parent="1" name="cms"/>
+    <schema id="8" parent="1" name="commande"/>
+    <schema id="9" parent="1" name="correspondance"/>
+    <schema id="10" parent="1" name="filmotheque"/>
+    <schema id="11" parent="1" name="foot"/>
+    <schema id="12" parent="1" name="formation"/>
+    <schema id="13" parent="1" name="forum"/>
+    <schema id="14" parent="1" name="forummvc"/>
+    <schema id="15" parent="1" name="forumsymfony"/>
+    <schema id="16" parent="1" name="grand_hotel"/>
+    <schema id="17" parent="1" name="hash"/>
+    <schema id="18" parent="1" name="information_schema"/>
+    <schema id="19" parent="1" name="insee"/>
+    <schema id="20" parent="1" name="mysql"/>
+    <schema id="21" parent="1" name="northwind"/>
+    <schema id="22" parent="1" name="partiel"/>
+    <schema id="23" parent="1" name="performance_schema"/>
+    <schema id="24" parent="1" name="planning"/>
+    <schema id="25" parent="1" name="salarie"/>
+    <schema id="26" parent="1" name="salaries"/>
+    <schema id="27" parent="1" name="stock"/>
+    <schema id="28" parent="1" name="symfony"/>
+    <schema id="29" parent="1" name="symfonyforum"/>
+    <schema id="30" parent="1" name="test"/>
+    <schema id="31" parent="1" name="testbdd"/>
+    <schema id="32" parent="1" name="test_resolution"/>
+    <schema id="33" parent="1" name="test_view"/>
+    <schema id="34" parent="1" name="test_vues"/>
+    <schema id="35" parent="1" name="topscore"/>
+    <schema id="36" parent="1" name="tp bdd"/>
+    <schema id="37" parent="1" name="tp_bdd"/>
+    <schema id="38" parent="1" name="tp_transaction"/>
+    <schema id="39" parent="1" name="videotheque"/>
+    <schema id="40" parent="1" name="webavance"/>
+    <table id="41" parent="2" name="question"/>
+    <table id="42" parent="2" name="reponse"/>
+    <table id="43" parent="2" name="sondage"/>
+    <table id="44" parent="2" name="utilisateur"/>
+    <column id="45" parent="41" name="id_question">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="46" parent="41" name="id_sondage">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="41" name="question">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="41" name="nb_reponse">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="41" name="type">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="50" parent="41" name="id_sondage">
+      <ColNames>id_sondage</ColNames>
+    </index>
+    <key id="51" parent="41" name="PRIMARY">
+      <ColNames>id_question</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="52" parent="41" name="question_ibfk_1">
+      <ColNames>id_sondage</ColNames>
+      <RefSchemaName>sondage</RefSchemaName>
+      <RefTableName>sondage</RefTableName>
+      <RefColNames>id_sondage</RefColNames>
+    </foreign-key>
+    <column id="53" parent="42" name="id_reponse">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="54" parent="42" name="id_question">
+      <Position>2</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="55" parent="42" name="reponse">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="42" name="lien_image">
+      <Position>4</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="57" parent="42" name="id_question">
+      <ColNames>id_question</ColNames>
+    </index>
+    <key id="58" parent="42" name="PRIMARY">
+      <ColNames>id_reponse</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="59" parent="42" name="reponse_ibfk_1">
+      <ColNames>id_question</ColNames>
+      <RefSchemaName>sondage</RefSchemaName>
+      <RefTableName>question</RefTableName>
+      <RefColNames>id_question</RefColNames>
+    </foreign-key>
+    <column id="60" parent="43" name="id_sondage">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="61" parent="43" name="titre">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="62" parent="43" name="description">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="63" parent="43" name="dateDebut">
+      <Position>4</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="64" parent="43" name="dateFin">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="43" name="id_utilisateur">
+      <Position>6</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="66" parent="43" name="nb_question">
+      <Position>7</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="43" name="verif_duplication">
+      <Position>8</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="43" name="prevention_spam">
+      <Position>9</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="69" parent="43" name="anonyme">
+      <Position>10</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="43" name="chronometrer">
+      <Position>11</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="71" parent="43" name="id_utilisateur">
+      <ColNames>id_utilisateur</ColNames>
+    </index>
+    <key id="72" parent="43" name="PRIMARY">
+      <ColNames>id_sondage</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="73" parent="43" name="sondage_ibfk_1">
+      <ColNames>id_utilisateur</ColNames>
+      <RefSchemaName>sondage</RefSchemaName>
+      <RefTableName>utilisateur</RefTableName>
+      <RefColNames>id_utilisateur</RefColNames>
+    </foreign-key>
+    <column id="74" parent="44" name="id_utilisateur">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="75" parent="44" name="pseudo">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="76" parent="44" name="mdp">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="77" parent="44" name="email">
+      <Position>4</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="78" parent="44" name="nom">
+      <Position>5</Position>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="79" parent="44" name="prenom">
+      <Position>6</Position>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="80" parent="44" name="adresse">
+      <Position>7</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="81" parent="44" name="PRIMARY">
+      <ColNames>id_utilisateur</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

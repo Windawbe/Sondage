@@ -1,6 +1,7 @@
 <?php
 Class Utilisateur{
-	
+
+    // <editor-fold desc="Attributs">
 	public $id_utilisateur;
 	public $pseudo;
 	public $mdp;
@@ -8,7 +9,9 @@ Class Utilisateur{
 	public $nom;
 	public $prenom;
 	public $adresse;
-	
+    // </editor-fold>
+
+    // <editor-fold desc="Constructeur">
 	public function __construct($pseudo, $mdp, $email, $nom, $prenom, $adresse)
     {
 		try{
@@ -23,9 +26,9 @@ Class Utilisateur{
 			die($e->getMessage());
 		}
     }
-	
-	// setters
-	
+    // </editor-fold>
+
+    // <editor-fold desc="Setters">
 	public function setPseudo($pseudo)
     {
         $this->pseudo = $pseudo;
@@ -55,8 +58,9 @@ Class Utilisateur{
     {
         $this->adresse = $adresse;
     }
-	
-	// Getters
+    // </editor-fold>
+
+    // <editor-fold desc="Getters">
 	public function getID()
     {
         return $this->id_utilisateur;
@@ -91,6 +95,27 @@ Class Utilisateur{
     {
         return $this->adresse;
     }
+    // </editor-fold>
+
+    // <editor-fold desc="Méthodes">
+    public function supprimerSondage($id_sondage)
+    {
+        // <editor-fold desc="Connexion BDD">
+        try{
+            $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
+            $db->exec("SET CHARACTER SET utf8");
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        catch (Exception $e){
+            die('Erreur : ' . $e->getMessage());
+        }
+        // </editor-fold>
+
+        $query = $db->prepare('DELETE FROM sondage WHERE id_sondage =:sondage');
+        $query->bindValue(':sondage',$id_sondage, PDO::PARAM_INT);
+        $query->execute();
+    }
+    // </editor-fold>
 }
 
 ?>

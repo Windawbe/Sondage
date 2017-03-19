@@ -9,11 +9,11 @@
                 <?php 
                 if(!isset($_SESSION['pseudo'])){ // Si utilisateur non connecté
                     echo "<a class='navbar-brand' href='#'>Sondagea</a>";
-                    echo "<a class='navbar-brand' href='ConnexionForm.php'>Lancez-vous!</a>";
+                    echo "<a class='navbar-brand' href='./ConnexionForm.php'>Lancez-vous!</a>";
                 }
                 else{ // Si utilisateur connecté
-                    echo "<a class='navbar-brand' href='CreationSondage.php'>Sondagea</a>";
-                    echo "<a class='navbar-brand' href='deconnexion.php'>Deconnexion</a>";
+                    echo "<a class='navbar-brand' href='./userFunction.php'>Sondagea</a>";
+                    echo "<a class='navbar-brand' href='./deconnexion.php'>Deconnexion</a>";
                     echo "<a class='navbar-brand' href='#'>".$_SESSION['pseudo']."</a>";
                 }
                 ?>

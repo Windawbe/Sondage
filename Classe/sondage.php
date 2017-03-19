@@ -1,6 +1,7 @@
 <?php
 Class Sondage{
-	
+
+    // <editor-fold desc="Attributs">
     public $id_sondage;
 	public $titre;
 	public $description;
@@ -12,8 +13,21 @@ Class Sondage{
 	public $prevention_spam;
 	public $anonyme;
 	public $chronometrer;
-	
-	public function __construct($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verification_duplication, 
+    // </editor-fold>
+
+
+
+    // <editor-fold desc="Constructeur">
+//    public function __construct($id_sondage){
+//        try{
+//            $this->setIdSondage($id_sondage);
+//        }
+//        catch(Exception $e){
+//            die($e->getMessage());
+//        }
+//    }
+
+	public function __construct($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verification_duplication,
 		$prevention_spam, $anonyme, $chronometrer)
     {
 		try{
@@ -29,10 +43,12 @@ Class Sondage{
 			$this->setChronometrer($chronometrer);   
 		}
 		catch(Exception $e){
-			die($e->getMessage());
-		}
+            die($e->getMessage());
+        }
     }
+    // </editor-fold>
 
+    // <editor-fold desc="Méthodes">
     public function CreateSondage(){
 
         // <editor-fold desc="Connexion BDD">
@@ -62,10 +78,15 @@ Class Sondage{
         $query->bindValue(':chronometrer', $this->chronometrer, PDO::PARAM_BOOL);
 
         $query->execute();
-        $query->CloseCursor();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="setters">
+    public function setIdSondage($id_sondage)
+    {
+        $this->id_sondage = $id_sondage;
     }
 
-	// setters
 	public function setTitre($titre)
     {
         $this->titre = $titre;
@@ -115,9 +136,10 @@ Class Sondage{
     {
         $this->chronometrer = $chronometrer;
     }
-	 
-	// getters
-	private function getId_sondage()
+    // </editor-fold">
+
+    // <editor-fold desc="getters">
+	public function getId_sondage()
 	{
 		return $this->id_sondage;
 	}
@@ -166,6 +188,7 @@ Class Sondage{
     {
         return $this->chronometrer;
     }
+    // </editor-fold>
 }
 
 ?>

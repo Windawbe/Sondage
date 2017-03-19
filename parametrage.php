@@ -7,6 +7,8 @@ if(!isset($_SESSION['pseudo'])){ // Si utilisateur non connecté
 else{
     
     require_once("./Classe/sondage.php");
+    require_once("./Classe/question.php");
+    require_once("./Classe/reponse.php");
 
     // <editor-fold desc="Récupération POST">
     $titre = "";
@@ -20,8 +22,9 @@ else{
     $nQuestion = 0;
 
     $d = $_POST['date'];
-    //echo '<script>alert('.$d.')</script>';
-    //echo $d;
+    $question = $_POST["question"];
+    $reponse = $_POST["reponse"];
+    $type = $_POST["type"];
 
     if(isset($_POST["nQuestion"])){
         $nQuestion = $_POST["nQuestion"];
@@ -53,19 +56,6 @@ else{
     }
     // </editor-fold>
 
-    $question = $_POST["question"];
-    $reponse = $_POST["reponse"];
-    $type = $_POST["type"];
-
-    foreach($question AS $num => $QuestionValue){
-        echo "<br><br><br>question $num = {$QuestionValue['intro']}<br>"; // on stocke la question
-        echo "type de question : ".$type[$num]."<br>";
-
-        for($i = 1; $i <= count($reponse[$num]); $i++){
-            echo "---réponse $i = {$reponse[$num]['r'.$i]}<br>";
-        }
-    }
-
     // <editor-fold desc="Connexion BDD">
     try{
         $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
@@ -83,22 +73,40 @@ else{
     $query->execute();
     $id_utilisateur = $query->fetchColumn();
 
-    $form = new Sondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nQuestion,
+    $sondage = new Sondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nQuestion,
         $verifDuplication, $prevSpam, $anonyme, $chronometrer);
 
-    //$form->CreateSondage();
+    $sondage->CreateSondage();
     // </editor-fold>
 
-    // <editor-fold desc="Questions et réponses">
-    for($i = 0; $i < $nQuestion; $i++){
+    // <editor-fold desc="Création des questions et réponses">
 
+    $query = $db->prepare('SELECT id_sondage FROM sondage WHERE id_utilisateur =:pseudo ORDER BY id_sondage DESC LIMIT 1');
+    $query->bindValue(':pseudo',$id_utilisateur, PDO::PARAM_INT);
+    $query->execute();
+    $id_sondage = $query->fetchColumn(); // On récupère l'id du dernier sondage crée par l'utilisateur
+
+    foreach($question AS $num => $QuestionValue){
+        //echo "<br><br><br>question $num = {$QuestionValue['intro']}<br>"; // on stocke la question
+        //echo "type de question : ".$type[$num]."<br>";
+        // On crée une question
+        $question = new Question($id_sondage, $QuestionValue['intro'], count($reponse[$num]), $type[$num]);
+        $question->CreateQuestion();
+
+        $query = $db->prepare('SELECT id_question FROM question INNER JOIN sondage ON
+        question.id_sondage = sondage.id_sondage WHERE sondage.id_utilisateur =:pseudo ORDER BY id_question DESC LIMIT 1');
+        $query->bindValue(':pseudo',$id_utilisateur, PDO::PARAM_INT);
+        $query->execute();
+        $id_question = $query->fetchColumn(); // On récupère l'id de la dernière question crée par l'utilisateur
+
+        //echo "question". $num ."<br>";
+        for($i = 1; $i <= count($reponse[$num]); $i++){
+            //echo "---réponse $i = {$reponse[$num]['r'.$i]}<br>";
+            $questionReponse = new Reponse($id_question, $reponse[$num]['r'.$i], '');
+            $questionReponse->CreateAnswer();
+        }
     }
-
     // </editor-fold>
-
-//    echo '<script>alert('.$id_utilisateur.')</script>';
-    //echo '<script>alert('.$result.')</script>';
-    //echo '<script>alert("'.date('d-m-Y H:i:s').'")</script>';
     
 }
 ?>

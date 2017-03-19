@@ -1,43 +1,73 @@
 <?php
 Class Question{
-	
+
+    // <editor-fold desc="attributs">
 	public $id_question;
 	public $id_sondage;
-	public $question;
+	public $description;
 	public $nb_reponse;
 	public $type;
-	
-	public function __construct($id_question, $id_sondage, $question, $nb_reponse, $type)
+    // </editor-fold>
+
+    // <editor-fold desc="Constructeur">
+	public function __construct($id_sondage, $description, $nb_reponse, $type)
     {
 		try{
-			$this->setId_sondage($id_question);
-			$this->setTitre($id_sondage);
-			$this->setDescription($question);
-			$this->setDateDebut($nb_reponse);
-			$this->setDateFin($type);
+			$this->setId_sondage($id_sondage);
+			$this->setDescription($description);
+			$this->setNbReponse($nb_reponse);
+			$this->setType($type);
 		}
 		catch(Exception $e){
 			die($e->getMessage());
 		}
     }
-	 
-	// setters
+    // </editor-fold>
+
+    // <editor-fold desc="Méthodes">
+    public function CreateQuestion(){
+
+        // <editor-fold desc="Connexion BDD">
+        try{
+            $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
+            $db->exec("SET CHARACTER SET utf8");
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        catch (Exception $e){
+            die('Erreur : ' . $e->getMessage());
+        }
+        // </editor-fold>
+
+        $query=$db->prepare('INSERT INTO question (id_sondage, description, nb_reponse, type)
+          VALUES (:id_sondage, :description, :nb_reponse, :type)');
+
+        $query->bindValue(':id_sondage', $this->id_sondage, PDO::PARAM_INT);
+        $query->bindValue(':description', $this->description, PDO::PARAM_STR);
+        $query->bindValue(':nb_reponse', $this->nb_reponse, PDO::PARAM_INT);
+        $query->bindValue(':type', $this->type, PDO::PARAM_STR);
+
+        $query->execute();
+        //$query->CloseCursor();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="setters">
 	public function setId_question($id_question)
 	{
 		$this->id_question = $id_question;
 	}
-	 
+
 	public function setId_sondage($id_sondage)
     {
         $this->id_sondage = $id_sondage;
     }
-	
-	public function setQuestion($question)
+
+	public function setDescription($description)
     {
-        $this->question = $question;
+        $this->description = $description;
     }
 	
-	public function setNb_reponse($nb_reponse)
+	public function setNbReponse($nb_reponse)
     {
         $this->nb_reponse = $nb_reponse;
     }
@@ -46,8 +76,9 @@ Class Question{
     {
         $this->type = $type;
     }
-	 
-	// getters
+    // </editor-fold>
+
+    // <editor-fold desc="getters">
 	public function getId_question()
 	{
 		return $this->id_question;
@@ -58,9 +89,9 @@ Class Question{
 		return $this->id_sondage;
     }
             
-    public function getQuestion()
+    public function getDescription()
     {
-        return $this->question;
+        return $this->description;
     }
             
     public function getNb_reponse()
@@ -72,6 +103,7 @@ Class Question{
     {
         return $this->type;
     }
+    // </editor-fold>
 }
 
 ?>

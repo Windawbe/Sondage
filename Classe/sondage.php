@@ -2,82 +2,70 @@
 Class Sondage{
 
     // <editor-fold desc="Attributs">
-    public $id_sondage;
-	public $titre;
-	public $description;
-	public $dateDebut;
-	public $dateFin;
-	public $id_utilisateur;
-	public $nb_question;
-	public $verification_duplication;
-	public $prevention_spam;
-	public $anonyme;
-	public $chronometrer;
+    private static $table="sondage";
+    private $id_sondage, $titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verification_duplication,
+        $prevention_spam, $anonyme, $chronometrer;
     // </editor-fold>
 
-
-
     // <editor-fold desc="Constructeur">
-//    public function __construct($id_sondage){
-//        try{
-//            $this->setIdSondage($id_sondage);
-//        }
-//        catch(Exception $e){
-//            die($e->getMessage());
-//        }
-//    }
-
-	public function __construct($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verification_duplication,
-		$prevention_spam, $anonyme, $chronometrer)
-    {
-		try{
-			$this->setTitre($titre);
-			$this->setDescription($description);
-			$this->setDateDebut($dateDebut);
-			$this->setDateFin($dateFin);
-			$this->setIdUtilisateur($id_utilisateur);
-			$this->setNb_question($nb_question);   
-			$this->setVerification_duplication($verification_duplication);    
-			$this->setPrevention_spam($prevention_spam);   
-			$this->setAnonyme($anonyme);   
-			$this->setChronometrer($chronometrer);   
-		}
-		catch(Exception $e){
-            die($e->getMessage());
+    public function __construct($id_sondage =''){
+        if ($id_sondage != '') {
+            $this->setId_sondage($id_sondage);
+            $this->load();
         }
     }
     // </editor-fold>
 
     // <editor-fold desc="Méthodes">
-    public function CreateSondage(){
+    public function load()
+    {
+        if (isset($this->id_question)) {
 
-        // <editor-fold desc="Connexion BDD">
-        try{
-            $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
-            $db->exec("SET CHARACTER SET utf8");
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        catch (Exception $e){
-            die('Erreur : ' . $e->getMessage());
-        }
-        // </editor-fold>
+            $sql=("SELECT * FROM ".self::$table." WHERE id_sondage =".$this->id_sondage);
+            if ($result = Database::fetch($sql)) {
+                $this->setTitre($result[0]['titre']);
+                $this->setDescription($result[0]['description']);
+                $this->setDateDebut($result[0]['dateDebut']);
+                $this->setDateFin($result[0]['dateFin']);
+                $this->setIdUtilisateur($result[0]['id_utilisateur']);
+                $this->setNb_question($result[0]['nb_question']);
+                $this->setVerification_duplication($result[0]['verification_duplication']);
+                $this->setPrevention_spam($result[0]['prevention_spam']);
+                $this->setAnonyme($result[0]['anonyme']);
+                $this->setChronometrer($result[0]['chronometrer']);
 
-        $query=$db->prepare('INSERT INTO sondage (titre, description, dateDebut, dateFin, id_utilisateur,
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public static function CreateSondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verif_duplication, $prevention_spam, $anonyme, $chronometrer){
+
+        $query="INSERT INTO sondage (titre, description, dateDebut, dateFin, id_utilisateur,
           nb_question, verif_duplication, prevention_spam, anonyme, chronometrer)
-          VALUES (:titre, :description, :dateDebut, :dateFin, :id_utilisateur, :nb_question, :verif_duplication, :prevention_spam, :anonyme, :chronometrer)');
+          VALUES ('".$titre."', '".$description."', '".$dateDebut."', '".$dateFin."', '".$id_utilisateur."', '".$nb_question."', '".$verif_duplication."', 
+          '".$prevention_spam."', '".$anonyme."', '".$chronometrer."')";
 
-        $query->bindValue(':titre', $this->titre, PDO::PARAM_STR);
-        $query->bindValue(':description', $this->description, PDO::PARAM_STR);
-        $query->bindValue(':dateDebut', $this->dateDebut, PDO::PARAM_STR);
-        $query->bindValue(':dateFin', $this->dateFin, PDO::PARAM_STR);
-        $query->bindValue(':id_utilisateur', $this->id_utilisateur, PDO::PARAM_INT);
-        $query->bindValue(':nb_question', $this->nb_question, PDO::PARAM_INT);
-        $query->bindValue(':verif_duplication', $this->verification_duplication, PDO::PARAM_BOOL);
-        $query->bindValue(':prevention_spam', $this->prevention_spam, PDO::PARAM_BOOL);
-        $query->bindValue(':anonyme', $this->anonyme, PDO::PARAM_BOOL);
-        $query->bindValue(':chronometrer', $this->chronometrer, PDO::PARAM_BOOL);
+        Database::exec($query);
+    }
 
-        $query->execute();
+    public static function GetSondageByUserID($id){
+
+        $query = 'SELECT * FROM sondage WHERE id_utilisateur ='.$id;
+        Database::exec($query);
+
+        $result = Database::fetch($query);
+
+        return $result;
+    }
+
+    public static function GetLastSondageIdByUser($id){
+
+        $query = 'SELECT id_sondage FROM sondage WHERE id_utilisateur ='.$id.' ORDER BY id_sondage DESC LIMIT 1';
+        $result = Database::fetchColumn($query);
+
+        return $result;
     }
     // </editor-fold>
 

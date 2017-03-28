@@ -51,6 +51,11 @@ opacity: .5;
 	cursor:pointer;
 }
 
+.logoS:hover{
+	opacity: 0.5;
+	cursor:pointer;
+}
+
 /*Login Signup Page*/
 
 .bg-image {
@@ -540,4 +545,3 @@ input[type=checkbox], input[type=radio] {
     color: #fff;
     background-color: #5bc0de;
 }
-

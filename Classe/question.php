@@ -2,52 +2,50 @@
 Class Question{
 
     // <editor-fold desc="attributs">
-	public $id_question;
-	public $id_sondage;
-	public $description;
-	public $nb_reponse;
-	public $type;
+    private static $table="question";
+    private $id_question, $id_sondage, $description, $nb_reponse, $type;
     // </editor-fold>
 
     // <editor-fold desc="Constructeur">
-	public function __construct($id_sondage, $description, $nb_reponse, $type)
-    {
-		try{
-			$this->setId_sondage($id_sondage);
-			$this->setDescription($description);
-			$this->setNbReponse($nb_reponse);
-			$this->setType($type);
-		}
-		catch(Exception $e){
-			die($e->getMessage());
-		}
+    public function __construct($id_question =''){
+        if ($id_question != '') {
+            $this->setId_question($id_question);
+            $this->load();
+        }
     }
     // </editor-fold>
 
     // <editor-fold desc="Méthodes">
-    public function CreateQuestion(){
+    public function load()
+    {
+        if (isset($this->id_question)) {
 
-        // <editor-fold desc="Connexion BDD">
-        try{
-            $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
-            $db->exec("SET CHARACTER SET utf8");
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql=("SELECT * FROM ".self::$table." WHERE id_question =".$this->id_question);
+            if ($result = Database::fetch($sql)) {
+                $this->setDescription($result[0]['description']);
+                $this->setNbReponse($result[0]['nb_reponse']);
+                $this->setType($result[0]['type']);
+
+                return true;
+            }
+            return false;
         }
-        catch (Exception $e){
-            die('Erreur : ' . $e->getMessage());
-        }
-        // </editor-fold>
+    }
 
-        $query=$db->prepare('INSERT INTO question (id_sondage, description, nb_reponse, type)
-          VALUES (:id_sondage, :description, :nb_reponse, :type)');
+    public static function CreateQuestion($id_sondage, $description, $nb_reponse, $type){
 
-        $query->bindValue(':id_sondage', $this->id_sondage, PDO::PARAM_INT);
-        $query->bindValue(':description', $this->description, PDO::PARAM_STR);
-        $query->bindValue(':nb_reponse', $this->nb_reponse, PDO::PARAM_INT);
-        $query->bindValue(':type', $this->type, PDO::PARAM_STR);
+        $query="INSERT INTO question (id_sondage, description, nb_reponse, type)
+          VALUES ('".$id_sondage."', '".$description."', '".$nb_reponse."', '".$type."')";
 
-        $query->execute();
-        //$query->CloseCursor();
+        Database::exec($query);
+    }
+
+    public static function GetLastQuestionIDByUser($id)
+    {
+        $query = "SELECT id_question FROM question INNER JOIN sondage ON question.id_sondage = sondage.id_sondage WHERE sondage.id_utilisateur =".$id." ORDER BY id_question DESC LIMIT 1";
+        $result = Database::fetchColumn($query);
+
+        return $result;
     }
     // </editor-fold>
 

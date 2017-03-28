@@ -311,7 +311,6 @@ else{
             x = x.parent();
             x = x.parent();
             x.remove();
-
         });
 
         // <editor-fold desc="Supprimer une réponse">

@@ -20,11 +20,21 @@ else{
     $verifDuplication = 0;
     $prevSpam = 0;
     $nQuestion = 0;
+    $question = 0;
+    $reponse = 0;
+    $type = 0;
 
-    $d = $_POST['date'];
-    $question = $_POST["question"];
-    $reponse = $_POST["reponse"];
-    $type = $_POST["type"];
+    if(isset($_POST["question"])){
+        $question = $_POST["question"];
+    }
+
+    if(isset($_POST["reponse"])){
+        $reponse = $_POST["reponse"];
+    }
+
+    if(isset($_POST["type"])) {
+        $type = $_POST["type"];
+    }
 
     if(isset($_POST["nQuestion"])){
         $nQuestion = $_POST["nQuestion"];
@@ -56,58 +66,37 @@ else{
     }
     // </editor-fold>
 
-    // <editor-fold desc="Connexion BDD">
-    try{
-        $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
-        $db->exec("SET CHARACTER SET utf8"); 
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-    }
-    catch (Exception $e){
-        die('Erreur : ' . $e->getMessage());
-    }
-    // </editor-fold>
+    if($titre != "" && $description != "" && $dateDebut != "" && $dateFin != "") {
 
-    // <editor-fold desc="Création du sondage">
-    $query = $db->prepare('SELECT id_utilisateur FROM utilisateur WHERE pseudo =:pseudo');
-    $query->bindValue(':pseudo',$_SESSION['pseudo'], PDO::PARAM_STR);
-    $query->execute();
-    $id_utilisateur = $query->fetchColumn();
+        // <editor-fold desc="Création du sondage">
+        $id_utilisateur = Utilisateur::getIDByPseudo();
 
-    $sondage = new Sondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nQuestion,
-        $verifDuplication, $prevSpam, $anonyme, $chronometrer);
+        Sondage::CreateSondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nQuestion,
+            $verifDuplication, $prevSpam, $anonyme, $chronometrer);
+        // </editor-fold>
 
-    $sondage->CreateSondage();
-    // </editor-fold>
+        // <editor-fold desc="Création des questions et réponses">
+        $id_sondage = Sondage::GetLastSondageIdByUser($id_utilisateur); // on récupère l'id du dernier sondage créé par l'utilisateur
 
-    // <editor-fold desc="Création des questions et réponses">
+        if ($question != 0) {
+            foreach ($question AS $num => $QuestionValue) {
+                // On crée une question
 
-    $query = $db->prepare('SELECT id_sondage FROM sondage WHERE id_utilisateur =:pseudo ORDER BY id_sondage DESC LIMIT 1');
-    $query->bindValue(':pseudo',$id_utilisateur, PDO::PARAM_INT);
-    $query->execute();
-    $id_sondage = $query->fetchColumn(); // On récupère l'id du dernier sondage crée par l'utilisateur
+                Question::CreateQuestion($id_sondage, $QuestionValue['intro'], count($reponse[$num]), $type[$num]);
 
-    foreach($question AS $num => $QuestionValue){
-        //echo "<br><br><br>question $num = {$QuestionValue['intro']}<br>"; // on stocke la question
-        //echo "type de question : ".$type[$num]."<br>";
-        // On crée une question
-        $question = new Question($id_sondage, $QuestionValue['intro'], count($reponse[$num]), $type[$num]);
-        $question->CreateQuestion();
+                $id_question = Question::GetLastQuestionIDByUser($id_utilisateur);
 
-        $query = $db->prepare('SELECT id_question FROM question INNER JOIN sondage ON
-        question.id_sondage = sondage.id_sondage WHERE sondage.id_utilisateur =:pseudo ORDER BY id_question DESC LIMIT 1');
-        $query->bindValue(':pseudo',$id_utilisateur, PDO::PARAM_INT);
-        $query->execute();
-        $id_question = $query->fetchColumn(); // On récupère l'id de la dernière question crée par l'utilisateur
-
-        //echo "question". $num ."<br>";
-        for($i = 1; $i <= count($reponse[$num]); $i++){
-            //echo "---réponse $i = {$reponse[$num]['r'.$i]}<br>";
-            $questionReponse = new Reponse($id_question, $reponse[$num]['r'.$i], '');
-            $questionReponse->CreateAnswer();
+                if ($reponse != 0) {
+                    for ($i = 1; $i <= count($reponse[$num]); $i++) {
+                        Reponse::CreateAnswer($id_question, $reponse[$num]['r' . $i], '');
+                    }
+                }
+            }
         }
+        // </editor-fold>
     }
-    // </editor-fold>
-    
+
+    header("Refresh: 1; URL=./dashboard.php");
 }
 ?>
 

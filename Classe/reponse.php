@@ -2,6 +2,7 @@
 Class Reponse{
 
     // <editor-fold desc="Attributs">
+    private static $table="reponse";
 	public $id_reponse;
 	public $id_question;
 	public $reponse;
@@ -9,42 +10,37 @@ Class Reponse{
     // </editor-fold>
 
     // <editor-fold desc="Constructeur">
-	public function __construct($id_question, $reponse, $lien_image)
-    {
-		try{
-			$this->setId_question($id_question);
-			$this->setReponse($reponse);
-			$this->setLien_image($lien_image);
-		}
-		catch(Exception $e){
-			die($e->getMessage());
-		}
+    public function __construct($id_reponse =''){
+        if ($id_reponse != '') {
+            $this->setId_reponse($id_reponse);
+            $this->load();
+        }
     }
     // </editor-fold>
 
     // <editor-fold desc="Méthodes">
-    public function CreateAnswer(){
+    public function load()
+    {
+        if (isset($this->id_reponse)) {
 
-        // <editor-fold desc="Connexion BDD">
-        try{
-            $db = new PDO('mysql:host=localhost;dbname=sondage', 'root', '');
-            $db->exec("SET CHARACTER SET utf8");
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql=("SELECT * FROM ".self::$table." WHERE id_reponse =".$this->id_reponse);
+            if ($result = Database::fetch($sql)) {
+                $this->setId_question($result[0]['$id_question']);
+                $this->setReponse($result[0]['$reponse']);
+                $this->setLien_image($result[0]['$lien_image']);
+
+                return true;
+            }
+            return false;
         }
-        catch (Exception $e){
-            die('Erreur : ' . $e->getMessage());
-        }
-        // </editor-fold>
+    }
 
-        $query=$db->prepare('INSERT INTO reponse (id_question, reponse, lien_image)
-          VALUES (:id_question, :reponse, :lien_image)');
+    public static function CreateAnswer($id_question, $reponse, $lien_image){
 
-        $query->bindValue(':id_question', $this->id_question, PDO::PARAM_INT);
-        $query->bindValue(':reponse', $this->reponse, PDO::PARAM_STR);
-        $query->bindValue(':lien_image', $this->lien_image, PDO::PARAM_STR);
+        $query="INSERT INTO reponse (id_question, reponse, lien_image)
+          VALUES ('".$id_question."', '".$reponse."', '".$lien_image."')";
 
-        $query->execute();
-        //$query->CloseCursor();
+        Database::exec($query);
     }
     // </editor-fold>
 

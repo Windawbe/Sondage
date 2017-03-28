@@ -19,18 +19,29 @@
 <script type="text/javascript" src="./Bootstrap/js/bootstrap.min.js"></script>
 
 <head>
-    <meta http-equiv="content-type"
-          content="text/html;charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 </head>
 
 <?php
 session_start();
+require_once("./Classe/database.php");
+require_once("./Classe/utilisateur.php");
+$utilisateur = new utilisateur();
+
 require_once("header.php");
 ?>
 
-<body background="Images/background0.jpg" style="background-repeat: no-repeat;
+<body background="Images/background3.jpg" style="background-repeat: no-repeat;
     background-attachment: fixed;">
+
 
 </body>
 
 </html>
+
+<style>
+    .logoS:hover{
+        opacity: 0.5;
+        cursor:pointer;
+    }
+</style>

@@ -1,0 +1,42 @@
+<html>
+<head>
+<script type="text/javascript">
+var isPopup = true; //permet de tester à partir de la page mere qu'il s'agit bien de la popup.
+ 
+var mere; // sert à garder une référence sur la page mere.
+ 
+/**
+ * Donne le focus à la popup lors de son ouverture.
+ */
+function windowLoading() {
+  window.focus();
+}
+ 
+/**
+ * Rouvre la page mere ou lui donne le focus si elle déjà ouverte.
+ */
+function openMother()
+{
+	if (window.opener && window.opener.isMother)
+	{
+		window.opener.focus();
+	}
+	else if (!mere || mere.closed)
+	{
+		mere = window.open("mere.html","mere","");
+	}
+	else if (mere)
+	{
+		mere.focus();
+	}
+	return false;
+}
+</script>
+</head>
+<body onload="windowLoading();">
+<p align="center"><a href="mere.html" target="_blank" onclick="return openMother();">Cliquez ici pour &eacute;crire votre compte rendu</a></p>
+<p>
+	<textarea name="champs_de_texte" id="champs_de_texte" cols="35" rows="20"></textarea>
+</p>
+</body>
+</html>

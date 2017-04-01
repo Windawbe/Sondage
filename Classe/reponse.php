@@ -35,12 +35,22 @@ Class Reponse{
         }
     }
 
-    public static function CreateAnswer($id_question, $reponse, $lien_image){
-
+    public static function CreateAnswer($id_question, $reponse, $lien_image)
+    {
         $query="INSERT INTO reponse (id_question, reponse, lien_image)
           VALUES ('".$id_question."', '".$reponse."', '".$lien_image."')";
 
         Database::exec($query);
+    }
+
+    public static function GetAnswer($id_question)
+    {
+        $query = "SELECT * FROM reponse WHERE id_question =".$id_question;
+        Database::exec($query);
+
+        $result = Database::fetch($query);
+
+        return $result;
     }
     // </editor-fold>
 

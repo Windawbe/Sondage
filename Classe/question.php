@@ -34,7 +34,7 @@ Class Question{
 
     public static function CreateQuestion($id_sondage, $description, $nb_reponse, $type){
 
-        $query="INSERT INTO question (id_sondage, description, nb_reponse, type)
+        $query="INSERT INTO ".self::$table." (id_sondage, description, nb_reponse, type)
           VALUES ('".$id_sondage."', '".$description."', '".$nb_reponse."', '".$type."')";
 
         Database::exec($query);
@@ -42,10 +42,28 @@ Class Question{
 
     public static function GetLastQuestionIDByUser($id)
     {
-        $query = "SELECT id_question FROM question INNER JOIN sondage ON question.id_sondage = sondage.id_sondage WHERE sondage.id_utilisateur =".$id." ORDER BY id_question DESC LIMIT 1";
+        $query = "SELECT id_question FROM ".self::$table." INNER JOIN sondage ON question.id_sondage = sondage.id_sondage WHERE sondage.id_utilisateur =".$id." ORDER BY id_question DESC LIMIT 1";
         $result = Database::fetchColumn($query);
 
         return $result;
+    }
+
+    public static function GetQuestion($id_sondage)
+    {
+        $query = "SELECT * FROM ".self::$table." WHERE id_sondage =".$id_sondage;
+        Database::exec($query);
+
+        $result = Database::fetch($query);
+
+        return $result;
+    }
+
+    public static function DeleteQuestion($id_sondage)
+    {
+        $query = "DELETE FROM ".self::$table." WHERE id_sondage =".$id_sondage;
+        echo $query;
+        Database::exec($query);
+
     }
     // </editor-fold>
 

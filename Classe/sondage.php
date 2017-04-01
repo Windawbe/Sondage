@@ -42,7 +42,7 @@ Class Sondage{
 
     public static function CreateSondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verif_duplication, $prevention_spam, $anonyme, $chronometrer){
 
-        $query="INSERT INTO sondage (titre, description, dateDebut, dateFin, id_utilisateur,
+        $query="INSERT INTO ".self::$table." (titre, description, dateDebut, dateFin, id_utilisateur,
           nb_question, verif_duplication, prevention_spam, anonyme, chronometrer)
           VALUES ('".$titre."', '".$description."', '".$dateDebut."', '".$dateFin."', '".$id_utilisateur."', '".$nb_question."', '".$verif_duplication."', 
           '".$prevention_spam."', '".$anonyme."', '".$chronometrer."')";
@@ -52,7 +52,7 @@ Class Sondage{
 
     public static function GetSondageByUserID($id){
 
-        $query = 'SELECT * FROM sondage WHERE id_utilisateur ='.$id;
+        $query = 'SELECT * FROM '.self::$table.' WHERE id_utilisateur ='.$id;
         Database::exec($query);
 
         $result = Database::fetch($query);
@@ -62,10 +62,45 @@ Class Sondage{
 
     public static function GetLastSondageIdByUser($id){
 
-        $query = 'SELECT id_sondage FROM sondage WHERE id_utilisateur ='.$id.' ORDER BY id_sondage DESC LIMIT 1';
+        $query = 'SELECT id_sondage FROM '.self::$table.' WHERE id_utilisateur ='.$id.' ORDER BY id_sondage DESC LIMIT 1';
+        Database::exec($query);
         $result = Database::fetchColumn($query);
 
         return $result;
+    }
+
+    public static function DeleteSondage($id_sondage)
+    {
+        $query = "DELETE FROM ".self::$table." WHERE id_sondage =".$id_sondage;
+        Database::exec($query);
+    }
+
+    public static function GetSondageByID($id_sondage)
+    {
+        $query = "SELECT * FROM ".self::$table." WHERE id_sondage =".$id_sondage;
+        Database::exec($query);
+
+        $result = Database::fetch($query);
+
+        $user = 0;
+        foreach($result AS $res => $rest) {
+            $user = $rest['id_utilisateur'];
+        }
+
+        if($user == Utilisateur::getIDByPseudo())
+            return $result;
+        else
+            return null;
+    }
+
+    public static function UpdateSondage($id_sondage, $titre, $description, $dateDebut, $dateFin, $nb_question, $verif_duplication, $prevention_spam, $anonyme, $chronometrer)
+    {
+        $query="UPDATE " .self::$table. " SET titre = '".$titre."', description = '".$description."', dateDebut = '".$dateDebut."', 
+        dateFin = '".$dateFin."', nb_question = '".$nb_question."', verif_duplication = '".$verif_duplication."', 
+        prevention_spam = '".$prevention_spam."', anonyme = '".$anonyme."', chronometrer = '".$chronometrer."' 
+        WHERE id_sondage = ".$id_sondage;
+
+        Database::exec($query);
     }
     // </editor-fold>
 

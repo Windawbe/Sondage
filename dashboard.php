@@ -26,18 +26,25 @@ else {
     $sondage = new sondage();
     $result = $sondage->GetSondageByUserID($id_utilisateur);
 
-    echo "<div class='container' id='containerTest'>";
+    $i = 0;
+
+    echo "<div class='container' id='containerTest'><div class='row'>";
     foreach ($result AS $sondage) {
-//        echo $sondage['id_sondage'] . " : " . $sondage['titre'];
-        echo "<div class='row'><div class='col-md-4 col-sm-4 col-xs-4'>" .
-            "<div class='well'><a id='".$sondage['id_sondage']."' class='supprimer' href='javascript:void(0);' role='button'><i class='fa fa-trash-o' aria-hidden='true'></i></a>" .
-            "<h4 class='muted'>".$sondage['titre']."</h4>" .
+        $i++;
+        echo "<div class='col-md-4 col-sm-4 col-xs-4'>" .
+            "<div class='well'><a id='".$sondage['id_sondage']."' class='supprimer' href='javascript:void(0);' data-confirm='Etes vous sûr de vouloir supprimer ce sondage ?' role='button'><i class='fa fa-trash-o' aria-hidden='true'></i></a>" .
+            "<h6 class='muted'>".$sondage['titre']."</h4>" .
             "<div class='row'>".
             "<hr><div class='col-md-6 col-sm-6 col-xs-6'>0 Réponses</div>" .
             "<div class='col-md-2 col-sm-2 col-xs-2'><a href='./modifierSondage.php?id=".$sondage['id_sondage']."' class='modifier'><i class='fa fa-pencil' aria-hidden='true' data-toggle='tooltip' title='Modifier'></i><hr></div></a>" .
-            "<div class='col-md-2 col-sm-2 col-xs-2'><a href='./partager.php?id=".$sondage['id_sondage']."'><i class='fa fa-share' aria-hidden='true' data-toggle='tooltip' title='Partager'></i><hr></div></a>" .
+            "<div class='col-md-2 col-sm-2 col-xs-2'><a href='./ShareSondage.php?id=".$sondage['id_sondage']."'><i class='fa fa-share' aria-hidden='true' data-toggle='tooltip' title='Partager'></i></a><hr></div>".
             "<div class='col-md-2 col-sm-2 col-xs-2'><a href><i class='fa fa-pie-chart' aria-hidden='true' data-toggle='tooltip' title='Analyser'></i><hr></div></a>" .
             "</div></div></div>";
+
+        if($i == 3){
+            $i = 0;
+            echo "</div><div class='row'>";
+        }
     }
     echo "</div>";
 }
@@ -68,6 +75,21 @@ else {
         display:inline-block;
         text-align:left;
     }
+
+
+    #overlay6{
+        display: none;
+        position: fixed;
+        background: white;
+        border-radius:3px;
+        z-index: 1000;
+    }
+    #modalCheck6{
+        display: none;
+    }
+    #modalCheck6:checked + #overlay6{
+        display: block;
+    }
 </style>
 
 <script>
@@ -88,9 +110,15 @@ else {
         var id = $(this).attr("id");
 
         var survey = $(this).parent().parent();
-        survey.remove();
 
-        ajaxProcess("sondage_procedure.php?id="+id);
+        var choice = confirm(this.getAttribute('data-confirm'));
+
+        if (choice) {
+            survey.remove();
+
+            ajaxProcess("sondage_procedure.php?id=" + id);
+        }
+
         return false;
 
     });

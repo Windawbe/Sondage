@@ -1,6 +1,5 @@
 <?php
 require_once("index.php");
-
 // Suppression des variables de session et de la session
 $_SESSION = array();
 session_destroy();

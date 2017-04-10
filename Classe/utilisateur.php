@@ -31,8 +31,8 @@ Class Utilisateur{
 
                 return true;
             }
-            return false;
         }
+        return false;
     }
     
     public static function add($username, $name, $firstname, $email, $address, $password, $confirm)

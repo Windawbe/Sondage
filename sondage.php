@@ -170,7 +170,6 @@ else{
 
 <script type="text/javascript" src="./createSondage.js" ></script>
 
-
 <style>
     .question{
         margin-bottom:15px;

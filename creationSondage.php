@@ -6,9 +6,9 @@ if(!isset($_SESSION['pseudo'])){ // Si utilisateur non connecté
 }
 else{
     
-    require_once("./Classe/sondage.php");
-    require_once("./Classe/question.php");
-    require_once("./Classe/reponse.php");
+//    require_once("./Classe/sondage.php");
+//    require_once("./Classe/question.php");
+//    require_once("./Classe/reponse.php");
 
     // <editor-fold desc="Récupération POST">
     $titre = "";
@@ -82,7 +82,7 @@ else{
             foreach ($question AS $num => $QuestionValue) {
                 // On crée une question
 
-                Question::CreateQuestion($id_sondage, $QuestionValue['intro'], count($reponse[$num]), $type[$num]);
+                Question::CreateQuestion($id_sondage, $QuestionValue['intro'], $reponse == 0 ? 0 : count($reponse[$num]) , $type[$num]);
 
                 $id_question = Question::GetLastQuestionIDByUser($id_utilisateur);
 

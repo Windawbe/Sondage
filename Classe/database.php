@@ -9,7 +9,7 @@ class Database
     private static $instance;
     private static $db;
 
-    /* Constructeur priv� */
+    /* Constructeur privé */
     private function __construct()
     {
     }

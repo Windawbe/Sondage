@@ -52,7 +52,7 @@ else {
                                                 "<h2>Modification du sondage</h2>".
                                             "</div>".
                                             "<div class='login-form'>".
-                                                "<form method='post' action='./modificationSondage.php?id=".$_GET['id']."' onsubmit='sendDate()'>".
+                                                "<form method='post' action='./modificationSondage.php?id=".htmlentities($_GET['id'])."' onsubmit='sendDate()'>".
                                                     "<div class='form-details' id='sondage'>".
                                                         "<label class='titre'>";
 
@@ -98,7 +98,7 @@ else {
                     echo "<div class='row reponse' id='r" . $r . "'>" .
                         "<div class='col-md-12 col-sm-12 col-xs-12'></div>" .
                         "<div class='col-md-6 col-sm-6 col-xs-6 col-md-push-3'>" .
-                        "<input type='text' class='reponse' name='reponse[" . $i . "][r" . $r . "]' id='q" . $i . "r" . $r . "' placeholder='Réponse " . $r . "' value=" . "\"" . $rept['reponse'] . "\"" . " required />" .
+                        "<input type='text' class='reponse' name='reponse[" . $i . "][r" . $r . "]' id='q" . $i . "r" . $r . "' readonly placeholder='Réponse " . $r . "' value=" . "\"" . $rept['reponse'] . "\"" . " required />" .
                         "</div>".
                         "<div class='col-md-1 col-sm-1 col-xs-1 col-md-push-3'>" .
                         "<i class='fa fa-trash fa-1x deleterep' aria-hidden='true'></i>" .

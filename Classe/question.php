@@ -28,8 +28,8 @@ Class Question{
 
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
     public static function CreateQuestion($id_sondage, $description, $nb_reponse, $type){
@@ -61,9 +61,7 @@ Class Question{
     public static function DeleteQuestion($id_sondage)
     {
         $query = "DELETE FROM ".self::$table." WHERE id_sondage =".$id_sondage;
-        echo $query;
         Database::exec($query);
-
     }
     // </editor-fold>
 

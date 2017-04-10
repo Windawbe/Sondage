@@ -6,9 +6,9 @@ if(!isset($_SESSION['pseudo'])){ // Si utilisateur non connecté
 }
 else{
 
-    require_once("./Classe/sondage.php");
-    require_once("./Classe/question.php");
-    require_once("./Classe/reponse.php");
+//    require_once("./Classe/sondage.php");
+//    require_once("./Classe/question.php");
+//    require_once("./Classe/reponse.php");
 
     // VERIFIE QU'UN UTILISATEUR NE PEUT PAS ALLER MODIFIER LE SONDAGE D'UN AUTRE UTILISATEUR
     $id_utilisateur = Utilisateur::getIDByPseudo();
@@ -53,10 +53,10 @@ else{
         }
 
         if (isset($_POST['titre'])) {
-            $titre = $_POST['titre'];
+            $titre = addslashes($_POST['titre']);
         }
         if (isset($_POST['introduction'])) {
-            $description = $_POST['introduction'];
+            $description = addslashes($_POST['introduction']);
         }
         if (isset($_POST['date'])) {
             $dateDebut = substr($_POST['date'], 4, 7) . '-' . substr($_POST['date'], 2, 2) . '-' . substr($_POST['date'], 0, 2);
@@ -99,7 +99,6 @@ else{
                     Question::CreateQuestion($_GET['id'], $QuestionValue['intro'], count($reponse[$num]), $type[$num]);
 
                     $id_question = Question::GetLastQuestionIDByUser($id_utilisateur);
-
 
                     if ($reponse != 0) {
                         for ($i = 1; $i <= count($reponse[$num]); $i++) {

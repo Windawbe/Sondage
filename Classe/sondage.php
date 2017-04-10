@@ -36,8 +36,8 @@ Class Sondage{
 
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
     public static function CreateSondage($titre, $description, $dateDebut, $dateFin, $id_utilisateur, $nb_question, $verif_duplication, $prevention_spam, $anonyme, $chronometrer){

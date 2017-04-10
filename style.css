@@ -3,7 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
 
 /*Font CDN*/
- 
+
 
 /*Global CSS*/
 
@@ -24,7 +24,7 @@ focus {
 .container{
     max-width:800px;
     width: 100%;
-    
+
 }
 li,
 ul {
@@ -41,9 +41,9 @@ ul {
 	color:#8492af;
 	width: 100px;
 	height:100px;
-	border:1px; 
-	border-style:solid; 
-	margin-top:20px; 
+	border:1px;
+	border-style:solid;
+	margin-top:20px;
 	margin-bottom:20px;
 }
 .brightness:hover {
@@ -200,7 +200,7 @@ opacity: .5;
     -moz-box-shadow: 0 2px 8px #d2d2d2;
     -webkit-box-shadow: 0 2px 8px #d2d2d2;
 }
- 
+
 .form-btn::before {
     content: "";
     font-family: FontAwesome;
@@ -308,7 +308,7 @@ opacity: .5;
     .user-dashboard .sales button {
         font-size: 11px;
         padding-right: 23px;
-}  
+}
     .user-dashboard .sales h2 {
     font-size: 12px;
 }
@@ -339,7 +339,7 @@ opacity: .5;
 }
     .user-dashboard .header-rightside .header-top img {
         max-width: 41px !important;
-} 
+}
     .user-dashboard .sales button {
     font-size: 10px;
 }
@@ -371,11 +371,7 @@ opacity: .5;
     line-height: normal;
 }
 
-input[type=checkbox], input[type=radio] {
-    margin: 20px 50px 0;
-    margin-top: 1px\9;
-    line-height: normal;
-}
+
 .btnradio{
     padding-top:10px;
 }
@@ -431,117 +427,119 @@ input[type=checkbox], input[type=radio] {
     cursor:pointer;
 }
 
-/*.btn span.glyphicon {*/
-/*opacity: 0;*/
+/*.funkyradio div {*/
+    /*clear: both;*/
+    /*overflow: hidden;*/
 /*}*/
-/*.btn.active span.glyphicon {*/
-/*opacity: 1;*/
+
+/*.funkyradio label {*/
+    /*width: 100%;*/
+    /*border-radius: 3px;*/
+    /*border: 1px solid #D1D3D4;*/
+    /*font-weight: normal;*/
 /*}*/
-.funkyradio div {
-    clear: both;
-    overflow: hidden;
-}
 
-.funkyradio label {
-    width: 100%;
-    border-radius: 3px;
-    border: 1px solid #D1D3D4;
-    font-weight: normal;
-}
+/*.funkyradio input[type="radio"]:empty,*/
+/*.funkyradio input[type="checkbox"]:empty {*/
+    /*display: none;*/
+/*}*/
 
-.funkyradio input[type="radio"]:empty,
-.funkyradio input[type="checkbox"]:empty {
-    display: none;
-}
+/*.funkyradio input[type="radio"]:empty ~ label,*/
+/*.funkyradio input[type="checkbox"]:empty ~ label {*/
+    /*position: relative;*/
+    /*line-height: 2.5em;*/
+    /*text-indent: 3.25em;*/
+    /*!*margin-top: 2em;*!*/
+    /*cursor: pointer;*/
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*user-select: none;*/
+/*}*/
 
-.funkyradio input[type="radio"]:empty ~ label,
-.funkyradio input[type="checkbox"]:empty ~ label {
-    position: relative;
-    line-height: 2.5em;
-    text-indent: 3.25em;
-    /*margin-top: 2em;*/
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 
-.funkyradio input[type="radio"]:empty ~ label:before,
-.funkyradio input[type="checkbox"]:empty ~ label:before {
-    position: absolute;
-    display: block;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    content: '';
-    width: 2.5em;
-    background: #D1D3D4;
-    border-radius: 3px 0 0 3px;
-}
 
-.funkyradio input[type="radio"]:hover:not(:checked) ~ label,
-.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
-    color: #888;
-}
+/*.funkyradio input[type="radio"]:hover:not(:checked) ~ label,*/
+/*.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {*/
+    /*color: #888;*/
+/*}*/
 
-.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
-.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
-    content: '\2714';
-    text-indent: .9em;
-    color: #C2C2C2;
-}
+/*.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,*/
+/*.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {*/
+    /*content: '\2714';*/
+    /*text-indent: .9em;*/
+    /*color: #C2C2C2;*/
+/*}*/
 
-.funkyradio input[type="radio"]:checked ~ label,
-.funkyradio input[type="checkbox"]:checked ~ label {
-    color: #777;
-}
+/*.funkyradio input[type="radio"]:checked ~ label,*/
+/*.funkyradio input[type="checkbox"]:checked ~ label {*/
+    /*color: #777;*/
+/*}*/
 
-.funkyradio input[type="radio"]:checked ~ label:before,
-.funkyradio input[type="checkbox"]:checked ~ label:before {
-    content: '\2714';
-    text-indent: .9em;
-    color: #333;
-    background-color: #ccc;
-}
+/*.funkyradio input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio input[type="checkbox"]:checked ~ label:before {*/
+    /*content: '\2714';*/
+    /*text-indent: .9em;*/
+    /*color: #333;*/
+    /*background-color: #ccc;*/
+/*}*/
 
-.funkyradio input[type="radio"]:focus ~ label:before,
-.funkyradio input[type="checkbox"]:focus ~ label:before {
-    box-shadow: 0 0 0 3px #999;
-}
+/*.funkyradio input[type="radio"]:focus ~ label:before,*/
+/*.funkyradio input[type="checkbox"]:focus ~ label:before {*/
+    /*box-shadow: 0 0 0 3px #999;*/
+/*}*/
 
-.funkyradio-default input[type="radio"]:checked ~ label:before,
-.funkyradio-default input[type="checkbox"]:checked ~ label:before {
-    color: #333;
-    background-color: #ccc;
-}
+/*.funkyradio-default input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio-default input[type="checkbox"]:checked ~ label:before {*/
+    /*color: #333;*/
+    /*background-color: #ccc;*/
+/*}*/
 
-.funkyradio-primary input[type="radio"]:checked ~ label:before,
-.funkyradio-primary input[type="checkbox"]:checked ~ label:before {
-    color: #fff;
-    background-color: #337ab7;
-}
+/*.funkyradio-primary input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio-primary input[type="checkbox"]:checked ~ label:before {*/
+    /*color: #fff;*/
+    /*background-color: #337ab7;*/
+/*}*/
 
-.funkyradio-success input[type="radio"]:checked ~ label:before,
-.funkyradio-success input[type="checkbox"]:checked ~ label:before {
-    color: #fff;
-    background-color: #5cb85c;
-}
+/*.funkyradio-success input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio-success input[type="checkbox"]:checked ~ label:before {*/
+    /*color: #fff;*/
+    /*background-color: #5cb85c;*/
+/*}*/
 
-.funkyradio-danger input[type="radio"]:checked ~ label:before,
-.funkyradio-danger input[type="checkbox"]:checked ~ label:before {
-    color: #fff;
-    background-color: #d9534f;
-}
+/*.funkyradio-danger input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio-danger input[type="checkbox"]:checked ~ label:before {*/
+    /*color: #fff;*/
+    /*background-color: #d9534f;*/
+/*}*/
 
-.funkyradio-warning input[type="radio"]:checked ~ label:before,
-.funkyradio-warning input[type="checkbox"]:checked ~ label:before {
-    color: #fff;
-    background-color: #f0ad4e;
-}
+/*.funkyradio-warning input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio-warning input[type="checkbox"]:checked ~ label:before {*/
+    /*color: #fff;*/
+    /*background-color: #f0ad4e;*/
+/*}*/
 
-.funkyradio-info input[type="radio"]:checked ~ label:before,
-.funkyradio-info input[type="checkbox"]:checked ~ label:before {
-    color: #fff;
-    background-color: #5bc0de;
-}
+/*.funkyradio-info input[type="radio"]:checked ~ label:before,*/
+/*.funkyradio-info input[type="checkbox"]:checked ~ label:before {*/
+    /*color: #fff;*/
+    /*background-color: #5bc0de;*/
+/*}*/
+
+/*.funkyradio input[type="radio"]:empty ~ label:before,*/
+/*.funkyradio input[type="checkbox"]:empty ~ label:before {*/
+    /*position: absolute;*/
+    /*display: block;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*content: '';*/
+    /*width: 2.5em;*/
+    /*background: #D1D3D4;*/
+    /*border-radius: 3px 0 0 3px;*/
+/*}*/
+
+/*input[type=checkbox], input[type=radio] {*/
+    /*margin: 20px 50px 0;*/
+    /*margin-top: 1px\9;*/
+    /*line-height: normal;*/
+/*}*/

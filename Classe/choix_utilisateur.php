@@ -41,6 +41,19 @@ class Choix_utilisateur
 
         Database::exec($query);
     }
+
+    public static function getAnswer($id_reponse)
+    {
+        $query = "SELECT COUNT(*) FROM ".self::$table." WHERE id_reponse = ".$id_reponse;
+        $result = (int)Database::fetchColumn($query);
+
+        if($result != null) {
+            return $result;
+        }
+        else{
+            return 0;
+        }
+    }
     // </editor-fold>
 
     // <editor-fold desc="Setters">

@@ -49,12 +49,16 @@ Class Utilisateur{
         echo $username . " " . $name ." " .$firstname . " ". $email ." ". $address;
 
         // <editor-fold desc="Vérification du pseudo">
-        $query='SELECT COUNT(*) AS nbr FROM '.self::$table.' WHERE pseudo ='.$username;
+        $query='SELECT COUNT(*) AS nbr FROM '.self::$table.' WHERE pseudo ="'.$username.'"';
         Database::exec($query);
-        $pseudo_free=(Database::fetch($query)==0)?0:1;
+        //$pseudo_free=(Database::fetch($query)==0)?0:1;
+        $pseudo_free=Database::fetch($query);
 
-        //echo $pseudo_free;
-        if(!$pseudo_free){
+//        echo $pseudo_free[0]['nbr'];
+//        var_dump(Database::fetch($query));
+//        echo $pseudo_free;
+
+        if($pseudo_free[0]['nbr']){
             $pseudo_erreur1 = "Votre pseudo est déjà utilisé par un membre";
             $i++;
         }
@@ -73,11 +77,12 @@ Class Utilisateur{
         // </editor-fold>
 
         // <editor-fold desc="Vérification de l'adresse email">
-        $query='SELECT COUNT(*) AS nbr FROM '.self::$table.' WHERE email ='.$email;
+        $query='SELECT COUNT(*) AS nbr FROM '.self::$table.' WHERE email ="'.$email.'"';
         Database::exec($query);
-        $mail_free=(Database::fetch($query)==0)?0:1;
+        //$mail_free=(Database::fetch($query)==0)?0:1;
+        $mail_free=Database::fetch($query);
 
-        if(!$mail_free){
+        if($mail_free[0]['nbr']){
             $email_erreur1 = "Votre adresse email est déjà utilisée par un membre";
             $i++;
         }
@@ -94,13 +99,12 @@ Class Utilisateur{
         if ($i==0){
             // <editor-fold desc="Création de l'utilisateur">
             $sql="INSERT INTO ".self::$table." VALUES (NULL, '".$username."','".$password_hash."','".$email."','".$name."','".$firstname."','".$address."');";
-            //Database::exec($sql);
+            Database::exec($sql);
 
             $_SESSION['pseudo'] = $username;
 
-
             echo "<div class='wrapper container' style='margin-bottom:10px; margin-top:100px;'>".
-                "<div class='alert alert-danger'>".
+                "<div class='alert alert-success'>".
                 "<h1>Inscription réussie</h1></div></div>";
             header("Refresh: 2; URL=./index.php");
             // </editor-fold>

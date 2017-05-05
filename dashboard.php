@@ -28,11 +28,21 @@ else {
     echo "<div class='container' id='containerTest'><div class='row'>";
     foreach ($result AS $sondage) {
         $i++;
+
+        //$question = new question();
+        //$allQuestions = $question->GetQuestion($sondage['id_sondage']);
+        //$reponse = new reponse();
+        //$allReponses = $reponse->GetAllAnswer($allQuestions);
+        //$choix_utilisateur = new choix_utilisateur();
+        //$nb_reponse = $choix_utilisateur->getNbReponse($id_utilisateur, $allReponses);
+
+        $sondage['nb_reponse'] = $sondage['nb_reponse'] < 2 ? $sondage['nb_reponse'].' Réponse' : $sondage['nb_reponse']. ' Réponses';
+
         echo "<div class='col-md-4 col-sm-4 col-xs-4'>" .
             "<div class='well'><a id='" . $sondage['id_sondage'] . "' class='supprimer' href='javascript:void(0);' data-confirm='Etes vous sûr de vouloir supprimer ce sondage ?' role='button'><i class='fa fa-trash-o' aria-hidden='true'></i></a>" .
             "<h6 class='muted'>" . $sondage['titre'] . "</h4>" .
             "<div class='row'>" .
-            "<hr><div class='col-md-6 col-sm-6 col-xs-6'>0 Réponses</div>" .
+            "<hr><div class='col-md-6 col-sm-6 col-xs-6'>".$sondage['nb_reponse']."</div>" .
             "<div class='col-md-2 col-sm-2 col-xs-2'><a href='./modifierSondage.php?id=" . htmlentities($sondage['id_sondage']) . "' class='modifier'><i class='fa fa-pencil' aria-hidden='true' data-toggle='tooltip' title='Modifier'></i><hr></div></a>" .
             "<div class='col-md-2 col-sm-2 col-xs-2'><a href='./ShareSondage.php?id=" . htmlentities($sondage['id_sondage']) . "'><i class='fa fa-share' aria-hidden='true' data-toggle='tooltip' title='Partager'></i></a><hr></div>" .
             "<div class='col-md-2 col-sm-2 col-xs-2'><a href='./analyserSondage.php?id=" . htmlentities($sondage['id_sondage']) . "'><i class='fa fa-pie-chart' aria-hidden='true' data-toggle='tooltip' title='Analyser'></i><hr></div></a>" .

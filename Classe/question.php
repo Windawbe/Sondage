@@ -58,6 +58,16 @@ Class Question{
         return $result;
     }
 
+    public static function GetOneQuestion($id_question)
+    {
+        $query = "SELECT * FROM ".self::$table." WHERE id_question =".$id_question;
+        Database::exec($query);
+
+        $result = Database::fetch($query);
+
+        return $result;
+    }
+
     public static function DeleteQuestion($id_sondage)
     {
         $query = "DELETE FROM ".self::$table." WHERE id_sondage =".$id_sondage;

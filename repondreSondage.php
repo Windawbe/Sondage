@@ -70,6 +70,8 @@ else {
 
             $reponse = Reponse::GetAnswer($rest['id_question']);
 
+            $checked = "checked";
+
             foreach($reponse AS $rep => $rept){
                 $r++;
                 if($rest['type'] == 'textuelle'){
@@ -84,13 +86,14 @@ else {
                         "<div class='col-md-10 col-sm-10 col-xs-10 col-md-offset-1'>" .
                         "<div class='input-group'>".
                         "<span class='input-group-addon'>".
-                        "<input type='".$rest['type']."' name='q".$rest['id_question']."[]' value='".$rept['id_reponse']."' style='position:relative; margin:0; cursor:pointer;'>".
+                        "<input type='".$rest['type']."' name='q".$rest['id_question']."[]' value='".$rept['id_reponse']."' style='position:relative; margin:0; cursor:pointer;'".$checked.">".
                         "</span>".
                         "<input type='text' class='form-control' readonly disabled name='reponse[" . $i . "][r" . $r . "]' id='q" . $i . "r" . $r . "' value='".$rept['reponse']."'>".
                         "</div>".
                         "</div>" .
                         "</div><br/>";
                 }
+                $checked = "";
             }
 
             echo "</div>";

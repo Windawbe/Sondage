@@ -82,15 +82,15 @@ Class Sondage{
 
         $result = Database::fetch($query);
 
-        $user = 0;
-        foreach($result AS $res => $rest) {
-            $user = $rest['id_utilisateur'];
-        }
+        //$user = 0;
+        //foreach($result AS $res => $rest) {
+        //    $user = $rest['id_utilisateur'];
+        //}
 
-        if($user == Utilisateur::getIDByPseudo())
+        //if($user == Utilisateur::getIDByPseudo())
             return $result;
-        else
-            return null;
+        //else
+        //    return null;
     }
 
     public static function UpdateSondage($id_sondage, $titre, $description, $dateDebut, $dateFin, $nb_question, $verif_duplication, $prevention_spam, $anonyme, $chronometrer)
@@ -99,6 +99,19 @@ Class Sondage{
         dateFin = '".$dateFin."', nb_question = '".$nb_question."', verif_duplication = '".$verif_duplication."', 
         prevention_spam = '".$prevention_spam."', anonyme = '".$anonyme."', chronometrer = '".$chronometrer."' 
         WHERE id_sondage = ".$id_sondage;
+
+        Database::exec($query);
+    }
+
+    public static function addReponse($id_sondage)
+    {
+        $query = 'SELECT nb_reponse FROM '.self::$table.' WHERE id_sondage ='.$id_sondage;
+        Database::exec($query);
+        $nbrep = Database::fetchColumn($query);
+
+        $nbrep += 1;
+
+        $query= "UPDATE " .self::$table. " SET nb_reponse = " .$nbrep. " WHERE id_sondage = ".$id_sondage;
 
         Database::exec($query);
     }

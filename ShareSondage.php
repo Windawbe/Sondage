@@ -16,7 +16,7 @@ else{
         "<div class='row'>".
             "<div class='col-md-12 col-sm-12 col-xs-12'>".
                 "<div class='well'>".
-                    "<a href>Sondage2/repondreSondage.php?id=".$_GET['id']."</a>".
+                    "<a href>Sondage/repondreSondage.php?id=".$_GET['id']."</a>".
                 "</div>".
             "</div>".
         "</div>".

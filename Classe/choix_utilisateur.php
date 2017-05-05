@@ -4,12 +4,15 @@ class Choix_utilisateur
 {
     // <editor-fold desc="attributs">
     private static $table="choix_utilisateur";
-    private $id_reponse, $id_utilisateur, $temps;
+    private $id, $id_reponse, $id_utilisateur, $temps;
     // </editor-fold>
 
     // <editor-fold desc="Constructeur">
-    public function __construct(){
+    public function __construct($id=''){
+        if ($id != '') {
+            $this->setId($id);
             $this->load();
+        }
     }
     // </editor-fold>
 
@@ -54,9 +57,40 @@ class Choix_utilisateur
             return 0;
         }
     }
+
+    public static function getNbReponse($id_utilisateur, $list_id_reponse)
+    {
+        $chaineIdReponse = "";
+        for($i = 0; $i < count($list_id_reponse); $i++){
+            if($i +1 >= count($list_id_reponse)){
+                $chaineIdReponse = ($chaineIdReponse . $list_id_reponse[$i]['id_reponse']);
+            }
+            else {
+                $chaineIdReponse = ($chaineIdReponse . $list_id_reponse[$i]['id_reponse'] . ",");
+            }
+            //$lstIdQuestion[] = $id_question[$i]['id_question'];
+        }
+
+        $chaine = chop($chaineIdReponse, ",");
+
+        $query = "SELECT COUNT(DISTINCT(id_utilisateur)) FROM ".self::$table." WHERE id_utilisateur = '".$id_utilisateur."' AND id_reponse IN(".$chaine.")";
+        $result = (int)Database::fetchColumn($query);
+
+        if($result != null) {
+            return $result;
+        }
+        else{
+            return 0;
+        }
+    }
     // </editor-fold>
 
     // <editor-fold desc="Setters">
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function setTemps($temps)
     {
         $this->temps = $temps;

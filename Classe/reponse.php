@@ -52,6 +52,32 @@ Class Reponse{
 
         return $result;
     }
+
+    public static function GetAllAnswer($id_question)
+    {
+        $chaineIdQuestion = "";
+        for($i = 0; $i < count($id_question); $i++){
+            if($i +1 >= count($id_question)){
+                $chaineIdQuestion = ($chaineIdQuestion . $id_question[$i]['id_question']);
+            }
+            else {
+                $chaineIdQuestion = ($chaineIdQuestion . $id_question[$i]['id_question'] . ",");
+            }
+            //$lstIdQuestion[] = $id_question[$i]['id_question'];
+        }
+
+        $chaine = chop($chaineIdQuestion, ",");
+        //$chaineIdQuestion =
+
+        $query = "SELECT id_reponse FROM ".self::$table." WHERE id_question IN(".$chaine.")";
+        Database::exec($query);
+
+        $result = Database::fetch($query);
+
+        //var_dump($result);
+
+        return $result;
+    }
     // </editor-fold>
 
     // <editor-fold desc="setters">

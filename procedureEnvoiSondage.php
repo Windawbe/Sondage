@@ -12,6 +12,9 @@ else{
     {
         // on recherche d'abord le sondage sur lequel on travaille
         $sondage = Sondage::GetSondageByID($_GET['id']);
+        //on incrémente d'un le nombre de réponse
+        Sondage::addReponse($_GET['id']);
+
         foreach($sondage AS $res => $rest)
         {
             $question = Question::GetQuestion($rest['id_sondage']);
